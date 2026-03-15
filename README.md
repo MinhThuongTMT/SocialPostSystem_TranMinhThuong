@@ -1,4 +1,4 @@
-# Hệ Thống Social Post - Bài Tập Tuyển Dụng
+# SOCIAL POST SYSTEM
 
 Một **nền tảng mạng xã hội hoàn chỉnh** được xây dựng với **FastAPI**, **MongoDB**, và **Redis**.
 
