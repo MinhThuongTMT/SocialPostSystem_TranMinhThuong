@@ -1,0 +1,656 @@
+{
+  "info": {
+    "_postman_id": "social-post-demo-2026",
+    "name": "Social Post System - Demo Collection",
+    "description": "Complete testing collection for Social Post System with all 39 endpoints organized by category",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🏥 Health & Status",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 User Management",
+      "item": [
+        {
+          "name": "Register Alice",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"alice_id\", jsonData._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"alice_smith\", \"email\": \"alice@example.com\", \"password\": \"Alice123!@secure\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/users/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login Alice",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"alice_token\", jsonData.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"alice@example.com\", \"password\": \"Alice123!@secure\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/users/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register Bob",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"bob_id\", jsonData._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"bob_wilson\", \"email\": \"bob@example.com\", \"password\": \"Bob123!@secure\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/users/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login Bob",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"bob_token\", jsonData.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"bob@example.com\", \"password\": \"Bob123!@secure\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/users/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{alice_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/users/{{alice_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["users", "{{alice_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📝 Posts",
+      "item": [
+        {
+          "name": "Create Post - Alice",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"post_id\", jsonData._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{alice_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"content\": \"Xin chào! Đây là bài viết đầu tiên của tôi trên Social Post System. 🚀\", \"author_id\": \"{{alice_id}}\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/posts/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["posts", ""]
+            }
+          }
+        },
+        {
+          "name": "List Posts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/posts/?page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["posts", ""],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Post Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/posts/{{post_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["posts", "{{post_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Post - Alice",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{alice_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"content\": \"Updated: Bài viết này đã được cập nhật lần thứ 1! ⭐\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/posts/{{post_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["posts", "{{post_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Post - Alice",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{alice_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/posts/{{post_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["posts", "{{post_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "❤️ Likes",
+      "item": [
+        {
+          "name": "Like Post - Bob",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"post_id\": \"{{post_id}}\", \"user_id\": \"{{bob_id}}\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/likes/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["likes", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Likes for Post",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/likes/by-post?post_id={{post_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["likes", "by-post"],
+              "query": [
+                {
+                  "key": "post_id",
+                  "value": "{{post_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unlike Post - Bob",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/likes/{{post_id}}/{{bob_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["likes", "{{post_id}}", "{{bob_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💬 Comments",
+      "item": [
+        {
+          "name": "Add Comment - Bob",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"comment_id\", jsonData._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"post_id\": \"{{post_id}}\", \"user_id\": \"{{bob_id}}\", \"content\": \"Bài viết tuyệt vời! 👍 Mình rất thích Social Post System.\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/comments/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["comments", "add"]
+            }
+          }
+        },
+        {
+          "name": "Get Comments for Post",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/comments/by-post?post_id={{post_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["comments", "by-post"],
+              "query": [
+                {
+                  "key": "post_id",
+                  "value": "{{post_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Comment - Bob",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"content\": \"Bài viết tuyệt vời! 👍👍👍 Mình rất thích Social Post System. Cập nhật bình luận lần 2.\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/comments/{{comment_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["comments", "{{comment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Comment - Bob",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/comments/{{comment_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["comments", "{{comment_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Follows",
+      "item": [
+        {
+          "name": "Follow User - Bob follows Alice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"follower_id\": \"{{bob_id}}\", \"following_id\": \"{{alice_id}}\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/follows/follow",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["follows", "follow"]
+            }
+          }
+        },
+        {
+          "name": "Get Followers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/follows/followers?user_id={{alice_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["follows", "followers"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "{{alice_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Following",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/follows/following?user_id={{bob_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["follows", "following"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "{{bob_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unfollow User - Bob unfollows Alice",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bob_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/follows/{{bob_id}}/{{alice_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["follows", "{{bob_id}}", "{{alice_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Audit Logs",
+      "item": [
+        {
+          "name": "Get Audit Logs by User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/audit-logs/by-user?user_id={{alice_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["audit-logs", "by-user"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "{{alice_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Audit Logs by Post",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/audit-logs/by-post?post_id={{post_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["audit-logs", "by-post"],
+              "query": [
+                {
+                  "key": "post_id",
+                  "value": "{{post_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/audit-logs/?page=1&limit=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["audit-logs", ""],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
