@@ -88,7 +88,7 @@ class BackgroundJobsService:
         Runs hourly
         """
         try:
-            db = await get_database()
+            db = get_database()  # NOT async - returns database instance directly
             cutoff_date = datetime.utcnow() - timedelta(days=30)
             
             result = await db.audit_logs.delete_many({
@@ -115,7 +115,7 @@ class BackgroundJobsService:
         Runs at midnight UTC
         """
         try:
-            db = await get_database()
+            db = get_database()  # NOT async - returns database instance directly
             
             # Get stats for today
             today = datetime.utcnow().date()
@@ -226,7 +226,7 @@ class BackgroundJobsService:
         In production: integrate with real email service
         """
         try:
-            redis = await self.redis_conn.get_redis()
+            redis = await get_redis()  # CORRECT async call to get Redis connection
             
             notification = {
                 "email": email,
@@ -246,7 +246,7 @@ class BackgroundJobsService:
     async def log_background_activity(self, job_name: str, status: str, details: str = ""):
         """Log background job execution"""
         try:
-            db = await self.db.get_database()
+            db = get_database()  # NOT async - returns database instance directly
             
             await db.background_jobs_log.insert_one({
                 "job_name": job_name,
